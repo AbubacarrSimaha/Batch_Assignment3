@@ -4,6 +4,8 @@ import org.apache.spark._
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.IntegerType
 import org.apache.spark.sql.catalyst.plans._
+import java.net.URL
+
 
 object SparkAssignment2 {
   def main(args: Array[String]): Unit = {
@@ -20,7 +22,8 @@ object SparkAssignment2 {
     sparkDF.printSchema()
     sparkDF.show(5)
     //2. Create a new column with hostname derived from "url" column
-
+     val sparkDF2=sparkDF.selectExpr("*", "parse_url(`url`, 'HOST') as Hostname")
+     sparkDF2.show(10)
     //3. Filter "job_title" by any manager
     val sparkDF3 = sparkDF.filter(sparkDF("job_title").contains("Manager"))
     sparkDF3.show(false)
